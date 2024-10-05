@@ -1,4 +1,6 @@
-
+<?php
+    include './lib/readJsonFile.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
