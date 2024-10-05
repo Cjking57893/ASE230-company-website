@@ -176,30 +176,23 @@
                     <!-- end col -->
                 </div>
                 <!-- end row -->
-                <div class="row align-items-center mb-5">
-                    <div class="col-md-5 order-2 order-md-1 mt-md-0 mt-5">
+                <div class="row align-items-center">
+                    <div class="col-md-5 order-2 order-md-1 mt-md-0 mt-5 mx-auto">
                         <h2 class="mb-4"><?= $productsAndServices[0]["name"] ?></h2>
                         <p class="text-muted mb-5"><?= $productsAndServices[0]["description"] ?></p>
                         <div class="applications">
-                        <h3>Applications</h3>
+                        <h3 class="mb-3">Applications</h3>
                             <div class="application">
-                                <h4><?= $productsAndServices[0]["applications"][0]["name"] ?></h4>
+                                <h5><?= $productsAndServices[0]["applications"][0]["name"] ?></h5>
                                 <p><?= $productsAndServices[0]["applications"][0]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[0]["applications"][1]["name"] ?></h4>
+                                <h5><?= $productsAndServices[0]["applications"][1]["name"] ?></h5>
                                 <p><?= $productsAndServices[0]["applications"][1]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[0]["applications"][2]["name"] ?></h4>
+                                <h5><?= $productsAndServices[0]["applications"][2]["name"] ?></h5>
                                 <p><?= $productsAndServices[0]["applications"][2]["description"] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-md-6 ms-md-auto order-1 order-md-2">
-                        <div class="position-relative">
-                            <div class="ms-5 features-img">
                             </div>
                         </div>
                     </div>
@@ -207,28 +200,21 @@
                 </div> 
                 <!-- end row -->
                 <div class="row align-items-center section pb-0">
-                    <div class="col-md-6">
-                        <div class="position-relative mb-md-0 mb-5">
-                            <div class="me-5 features-img">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-md-5 ms-md-auto">
+                    <div class="col-md-5 mx-auto">
                         <h2 class="mb-4"><?= $productsAndServices[1]["name"] ?></h2>
                         <p class="text-muted mb-5"><?= $productsAndServices[1]["description"] ?></p>
                         <div class="applications">
-                        <h3>Applications</h3>
+                        <h3 class="mb-3">Applications</h3>
                             <div class="application">
-                                <h4><?= $productsAndServices[1]["applications"][0]["name"] ?></h4>
+                                <h5><?= $productsAndServices[1]["applications"][0]["name"] ?></h5>
                                 <p><?= $productsAndServices[1]["applications"][0]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[1]["applications"][1]["name"] ?></h4>
+                                <h5><?= $productsAndServices[1]["applications"][1]["name"] ?></h5>
                                 <p><?= $productsAndServices[1]["applications"][1]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[1]["applications"][2]["name"] ?></h4>
+                                <h5><?= $productsAndServices[1]["applications"][2]["name"] ?></h5>
                                 <p><?= $productsAndServices[1]["applications"][2]["description"] ?></p>
                             </div>
                         </div>
@@ -237,28 +223,21 @@
                 </div>
                 <!-- end row -->
                 <div class="row align-items-center section pb-0">
-                    <div class="col-md-6">
-                        <div class="position-relative mb-md-0 mb-5">
-                            <div class="me-5 features-img">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                    <div class="col-md-5 ms-md-auto">
+                    <div class="col-md-5 mx-auto">
                         <h2 class="mb-4"><?= $productsAndServices[2]["name"] ?></h2>
                         <p class="text-muted mb-5"><?= $productsAndServices[2]["description"] ?></p>
                         <div class="applications">
-                        <h3>Applications</h3>
+                        <h3 class="mb-3">Applications</h3>
                             <div class="application">
-                                <h4><?= $productsAndServices[2]["applications"][0]["name"] ?></h4>
+                                <h5><?= $productsAndServices[2]["applications"][0]["name"] ?></h5>
                                 <p><?= $productsAndServices[2]["applications"][0]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[2]["applications"][1]["name"] ?></h4>
+                                <h5><?= $productsAndServices[2]["applications"][1]["name"] ?></h5>
                                 <p><?= $productsAndServices[2]["applications"][1]["description"] ?></p>
                             </div>
                             <div class="application">
-                                <h4><?= $productsAndServices[2]["applications"][2]["name"] ?></h4>
+                                <h5><?= $productsAndServices[2]["applications"][2]["name"] ?></h5>
                                 <p><?= $productsAndServices[2]["applications"][2]["description"] ?></p>
                             </div>
                         </div>
