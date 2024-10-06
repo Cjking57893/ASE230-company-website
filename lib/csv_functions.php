@@ -1,16 +1,15 @@
 <?php 
-    //function for reading csv files
+    //function for reading awards csv file
     function read_csv_awards($file_path){
-        //open file
+        //open file for reading
         $file = fopen($file_path,'r');
         //loop runs as long as there is data to read from file
-        //continuation condition reads content from file
         if(file_exists($file_path)){
             while(!feof($file)) {
                 $content =fgets($file);
                 if(strlen($content)<5) continue;
                 $section=explode(',',$content);
-
+                //write html to page
                 '<br>';
                 echo "<div class=\"col-lg-4\">
                         <div class=\"card mt-4 border-0 shadow\">
@@ -29,19 +28,19 @@
         fclose($file);
     }
 
+    //function for reading team csv file
     function read_csv_team($file_path){
         //iterator for team member images
         $i = 1;
         //open file
         $file = fopen($file_path,'r');
         //loop runs as long as there is data to read from file
-        //continuation condition reads content from file
         if(file_exists($file_path)){
             while(!feof($file)) {
                 $content =fgets($file);
                 if(strlen($content)<5) continue;
                 $section=explode(',',$content);
-
+                //write html to page
                 '<br>';
                 echo "<div class=\"col-lg-3 col-sm-6\">
                         <div class=\"team-box mt-4 position-relative overflow-hidden rounded text-center shadow\">
