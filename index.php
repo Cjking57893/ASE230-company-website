@@ -99,88 +99,41 @@
         <!-- Hero End -->
 
         <!-- Features start -->
-        <section class="section bg-light" id="productsAndServices">
-            <div class="container">
-                <div class="row justify-content-center mb-5">
-                    <div class="col-lg-7 text-center">
-                        <h2 class="fw-bold">Key Products & Services</h2>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-                <div class="row align-items-center">
-                    <div class="col-md-5 order-2 order-md-1 mt-md-0 mt-5 mx-auto">
-                        <h2 class="mb-4"><?= $productsAndServices[0]["name"] ?></h2>
-                        <p class="text-muted mb-5"><?= $productsAndServices[0]["description"] ?></p>
-                        <div class="applications">
-                        <h3 class="mb-3">Applications</h3>
-                            <div class="application">
-                                <h5><?= $productsAndServices[0]["applications"][0]["name"] ?></h5>
-                                <p><?= $productsAndServices[0]["applications"][0]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[0]["applications"][1]["name"] ?></h5>
-                                <p><?= $productsAndServices[0]["applications"][1]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[0]["applications"][2]["name"] ?></h5>
-                                <p><?= $productsAndServices[0]["applications"][2]["description"] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div> 
-                <!-- end row -->
-                <div class="row align-items-center section pb-0">
-                    <div class="col-md-5 mx-auto">
-                        <h2 class="mb-4"><?= $productsAndServices[1]["name"] ?></h2>
-                        <p class="text-muted mb-5"><?= $productsAndServices[1]["description"] ?></p>
-                        <div class="applications">
-                        <h3 class="mb-3">Applications</h3>
-                            <div class="application">
-                                <h5><?= $productsAndServices[1]["applications"][0]["name"] ?></h5>
-                                <p><?= $productsAndServices[1]["applications"][0]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[1]["applications"][1]["name"] ?></h5>
-                                <p><?= $productsAndServices[1]["applications"][1]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[1]["applications"][2]["name"] ?></h5>
-                                <p><?= $productsAndServices[1]["applications"][2]["description"] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
-                <div class="row align-items-center section pb-0">
-                    <div class="col-md-5 mx-auto">
-                        <h2 class="mb-4"><?= $productsAndServices[2]["name"] ?></h2>
-                        <p class="text-muted mb-5"><?= $productsAndServices[2]["description"] ?></p>
-                        <div class="applications">
-                        <h3 class="mb-3">Applications</h3>
-                            <div class="application">
-                                <h5><?= $productsAndServices[2]["applications"][0]["name"] ?></h5>
-                                <p><?= $productsAndServices[2]["applications"][0]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[2]["applications"][1]["name"] ?></h5>
-                                <p><?= $productsAndServices[2]["applications"][1]["description"] ?></p>
-                            </div>
-                            <div class="application">
-                                <h5><?= $productsAndServices[2]["applications"][2]["name"] ?></h5>
-                                <p><?= $productsAndServices[2]["applications"][2]["description"] ?></p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
+<section class="section bg-light" id="productsAndServices">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-7 text-center">
+                <h2 class="fw-bold">Key Products & Services</h2>
             </div>
-            <!-- end container -->
-        </section>
-        <!-- Features end -->
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+        
+        <?php foreach ($productsAndServices as $product): ?>
+        <div class="row align-items-center section pb-0">
+            <div class="col-md-5 mx-auto">
+                <h2 class="mb-4"><?= $product["name"] ?></h2>
+                <p class="text-muted mb-5"><?= $product["description"] ?></p>
+                <div class="applications">
+                    <h3 class="mb-3">Applications</h3>
+                    <?php foreach ($product["applications"] as $application): ?>
+                    <div class="application">
+                        <h5><?= $application["name"] ?></h5>
+                        <p><?= $application["description"] ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+        <?php endforeach; ?>
+        
+    </div>
+    <!-- end container -->
+</section>
+<!-- Features end -->
+
 
         <!-- Team start -->
         <section class="section bg-light" id="team">
