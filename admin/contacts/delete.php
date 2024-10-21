@@ -29,7 +29,7 @@
                 <p>You will not be able to undo any deletion.</p>
                 <hr>
                 <form method="post" action="">
-                    <input type="hidden" name="employeeNumber" value="<?php echo htmlspecialchars($_GET['contact_phone']); ?>">
+                    <input type="hidden" name="contactPhone" value="<?php echo htmlspecialchars($_GET['contact_phone']); ?>">
                     <button type="submit" class="btn btn-danger" name="delete">Delete</button>
                     <button type="submit" class="btn btn-dark" name="cancel">Cancel</button>
                 </form>
@@ -39,7 +39,7 @@
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                         $phoneNumberToDelete = $_POST['contactPhone'];
                         $filename = '../../data/contacts.csv'; // Path to your CSV file
-                        delete_team_member("../../data/contacts.csv", $_GET['contact_phone']);
+                        delete_contact("../../data/contacts.csv", $_GET['contact_phone']);
                         //redirect back to index
                         header("Location: index.php");
                         exit; // Stop script execution
