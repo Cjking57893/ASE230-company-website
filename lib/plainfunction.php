@@ -135,3 +135,140 @@ function read_page_admin_detail($file_path, $page_name): void {
         echo "File not found.";
     }
 }
+
+function create_form_for_editing_page($file_path, $page_name) {
+    // Check if the file exists
+    if (file_exists($file_path)) {
+        // Open the file for reading
+        $file = fopen($file_path, 'r');
+        $is_in_section = false;
+        $skip_next_line = false;
+        $content = '';
+
+        // Loop through each line in the file
+        while (($line = fgets($file)) !== false) {
+            // Check if we have found the page name (section title)
+            if (trim($line) === $page_name . ":") {
+                // Start capturing content after skipping the next line
+                $is_in_section = true;
+                $skip_next_line = true; // Skip the line immediately after the title
+                $page_title = $page_name; // Set the title
+                continue;
+            }
+
+            // Skip the line immediately after the title
+            if ($skip_next_line) {
+                $skip_next_line = false; // We've skipped the line after the title
+                continue;
+            }
+
+            // Capture the content of the section
+            if ($is_in_section) {
+                $content .= $line;
+                break; // Stop after reading the content line
+            }
+        }
+
+        // Close the file
+        fclose($file);
+
+        // Display the form with the pre-filled page title and content
+        echo "<form method=\"post\" action=\"\">
+            <div class=\"mb-3\">
+                <label for=\"name\" class=\"form-label\">Page Name</label>
+                <input type=\"text\" class=\"form-control w-50\" id=\"name\" name=\"name\" value=\"" . htmlspecialchars($page_name) . "\" style=\"border-color: black\">
+            </div>
+            <div class=\"mb-3\">
+                <label for=\"content\" class=\"form-label\">Page Content</label>
+                <textarea class=\"form-control w-50\" id=\"content\" name=\"content\" rows=\"5\" style=\"border-color: black\">" . htmlspecialchars($content) . "</textarea>
+            </div>
+            <button type=\"submit\" class=\"btn btn-primary\">Save Changes</button>
+        </form>";
+    } else {
+        echo "File not found.";
+    }
+}
+
+function edit_page_info($file_path, $page_name, $page_content) {
+    // Open the file for reading
+    $file_read = fopen($file_path, 'r');
+    $lines = [];
+
+    if (file_exists($file_path)) {
+        while (($line = fgets($file_read)) !== false) {
+            // Check if the current line matches the page name (section title)
+            if (trim($line) === $page_name . ":") {
+                // Add the new page title and content to the lines array
+                $lines[] = $page_name . ":"; // Add the title
+                fgets($file_read); // Skip the line after the title
+                $lines[] = $page_content; // Add the new content
+                continue; // Skip the rest of the section and move on
+            }
+
+            // Add all other lines unchanged
+            $lines[] = $line;
+        }
+
+        fclose($file_read);
+
+        // Write the new content back to the file
+        $file_write = fopen($file_path, 'w');
+        foreach ($lines as $line) {
+            fwrite($file_write, $line);
+        }
+        fclose($file_write);
+
+        echo "Page '$page_name' has been successfully updated.";
+    } else {
+        echo "File not found.";
+    }
+}
+
+function read_pages_admin_index($file_path): void {
+    // Check if the file exists
+    if (file_exists($file_path)) {
+        // Open the file for reading
+        $file = fopen($file_path, 'r');
+        $title = '';
+        $skip_next_line = false;
+
+        // Loop through each line in the file
+        while (($line = fgets($file)) !== false) {
+            // Check if the line contains a section title (ends with ":")
+            if (substr(trim($line), -1) === ":") {
+                // Output the previous content (if any) and start a new row for the new section
+                if (!empty($title)) {
+                    echo "</td></tr>";
+                }
+
+                // Output the section title as a clickable link
+                $title = htmlspecialchars(trim($line, " \t\n\r:")); // Trim the colon and whitespace from the title
+                $encoded_title = urlencode($title); // URL-encode the title for use in the query string
+                echo "<tr><td class=\"align-middle\"><a href=\"detail.php?page_name=$encoded_title\">$title</a></td><td class=\"align-middle\">";
+
+                // Set flag to skip the next line (usually an empty or descriptive line)
+                $skip_next_line = true;
+                continue;
+            }
+
+            // Skip the line immediately after the title
+            if ($skip_next_line) {
+                $skip_next_line = false; // Reset the skip flag
+                continue;
+            }
+
+            // Display the content associated with the section title
+            echo htmlspecialchars($line) . "<br>";
+        }
+
+        // Close the last row (if applicable)
+        if (!empty($title)) {
+            echo "</td></tr>";
+        }
+
+        // Close the file
+        fclose($file);
+    } else {
+        echo "File not found.";
+    }
+}
