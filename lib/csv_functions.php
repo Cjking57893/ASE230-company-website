@@ -317,3 +317,61 @@
             fclose($file);
         }
     }
+
+    //function creates contact, based on form submission
+    function create_contact($file_path, $contact_name, $contact_phone, $contact_email){
+        $file = fopen($file_path,'a');
+        //create array to hold contact info
+        $data = [$contact_name, $contact_phone, $contact_email];
+        //open file for reading to check contact phone numebrs
+        $file_read = fopen($file_path, 'r');
+        //variable to act as a flag if a matching contact phone number is found
+        $found = false;
+        if(file_exists($file_path)){
+            while(($section = fgetcsv($file_read)) !== false) {
+                //check if the contact phone number in the file matches the contact phone number in the URL
+                if($section[1] == $contact_phone){
+                        $found = true;
+                }
+            }
+            fclose($file_read);
+            //write data if no contact phone number match is not found
+            if($found==false){
+                fputcsv($file, $data);
+                //redirect to edit.php
+                header("Location: edit.php?contact_phone=$contact_phone");
+                exit; // Stop script execution
+            }
+            else{
+                echo"<div class=\"text-center alert alert-light\" role=\"alert\" style=\"font-weight: bold;\">
+                    You cannot create contacts with matching phone numbers.
+                    </div>
+                    ";
+            }
+        }
+    }
+
+    //function deletes contact from contacts.csv
+    function delete_contact($file_path, $contact_phone){
+        $file = fopen($file_path, 'r');
+        $lines = [];
+        if(file_exists($file_path)){
+            while (($section = fgetcsv($file)) !== false) {
+                // Check if the contact phone number matches the contact phone number in the URL
+                if ($section[0] == $contact_phone) {
+                    continue;
+                }
+                $lines[] = $section; 
+            }
+        }
+        
+        fclose($file);
+
+
+        // Write the modified array back to the CSV file
+        $file = fopen($file_path, 'w');
+        foreach ($lines as $line) {
+            fputcsv($file, $line);
+        }
+        fclose($file);
+    }   
