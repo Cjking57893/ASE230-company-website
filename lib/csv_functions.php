@@ -27,21 +27,20 @@
 // this function creates an award based on the name
         function create_award($file_path, $award_year, $award_description){
             $file = fopen($file_path,'a');
-            //create array to hold employee info
+            //create array to hold award info
             $data = [$award_year, $award_description];
-            //open file for reading to check employee numebrs
+            //open file for reading to check award year
             $file_read = fopen($file_path, 'r');
-            //variable to act as a flag if a matching employee number is found
+            //variable to act as a flag if a matching award yearis found
             $found = false;
             if(file_exists($file_path)){
                 while(($section = fgetcsv($file_read)) !== false) {
-                    //check if the employee number in the file matches the employee number in the URL
                     if($section[0] == $award_year){
                             $found = true;
                     }
                 }
                 fclose($file_read);
-                //write data if no employee number match is not found
+                //write data if no award year match is not found
                 if($found==false){
                     fputcsv($file, $data);
                     //redirect to edit.php
@@ -63,24 +62,24 @@
             if(file_exists($file_path)){
                 while(($section = fgetcsv($file)) !== false) {
                     echo "<tr>
-                            <td class=\"align-middle\">$section[0]</td>
-                            <td class=\"align-middle\">$section[1]</td>
-                            </tr>";
+                        <td class=\"align-middle\">$section[1]</td>
+                        <td class=\"align-middle\"><a href=detail.php?award_description=$section[1]>$section[0]</a></td> 
+                        </tr>";
                 }
             }
         }
-            //function creates form with team member data already inside.
-    function create_award_edit($file_path, $award_year){
+            //function creates form with award data already inside.
+    function create_award_edit($file_path, $award_description){
         //open file for reading
         $file = fopen($file_path, 'r');
         if(file_exists($file_path)){
             while (($section = fgetcsv($file)) !== false) {
-                // Check if the emp number matches the emp number in the URL
-               
+                // Check if the year matches the year number in the URL
+                if ($section[1] == $award_description) {
                     echo "<form method=\"post\" action=\"\">
                     <div class=\"mb-3\">
                         <label for=\"year\" class=\"form-label\">Year the award was given</label>
-                        <input type=\"text\" class=\"form-control w-25\" id=\"year\" name=\"year\" value=\"$section[0]\" disabled>
+                        <input type=\"text\" class=\"form-control w-25\" id=\"year\" name=\"year\" value=\"$section[0]\" style=\"border-color: black\">
                     </div>
                     <div class=\"mb-3\">
                         <label for=\"description\" class=\"form-label\">Award Description</label>
@@ -88,28 +87,31 @@
                     </div>
                     <button type=\"submit\" class=\"btn btn-primary\">Save Changes</button>
                 </form>";
-                
+                break;
+                }
             }
         }
     }
         //function edits entry in the csv file according to input from edit form
         function edit_awards_info($file_path, $award_year, $award_description){
-            //open file for reading to find employee entry
+            //open file for reading to find award entry
             $file_read = fopen($file_path, 'r');
-            //create array to hold employee info
+            //create array to hold award info
             $data = [$award_year, $award_description];
             
             if(file_exists($file_path)){
                 while(($section = fgetcsv($file_read)) !== false) {
                     
                     // Check if the emp number matches the emp number in the URL
-                    if ($section[0] == $award_year) {
-                        continue; //skip over existing entry
+                    if ($section[1] == $award_description) {
+                        $section[0] == $award_year;
+                        $section[1] == $award_description;
+                        //continue; //skip over existing entry
                     }
                     $lines[] = $section;  
                     
                 }
-                $lines[] = $data;
+                //$lines[] = $data;
                 $file = fopen($file_path, 'w');
                 foreach ($lines as $line) {
                     fputcsv($file, $line);
@@ -118,6 +120,30 @@
             }
         }
 
+    function delete_award($file_path, $award_description){
+        $file = fopen($file_path, 'r');
+        $lines = [];
+        if(file_exists($file_path)){
+            while (($section = fgetcsv($file)) !== false) {
+                // Check if the emp number matches the emp number in the URL
+                if ($section[1] == $award_description) {
+                    continue;
+                }
+                $lines[] = $section; 
+            }
+        }
+        
+        fclose($file);
+
+
+        // Write the modified array back to the CSV file
+        $file = fopen($file_path, 'w');
+        foreach ($lines as $line) {
+            fputcsv($file, $line);
+        }
+        fclose($file);
+    }   
+        
     //function for reading team csv file
     function read_csv_team($file_path){
         //iterator for team member images
@@ -170,15 +196,15 @@
         }
     }
     //function to read specific award for admin detail page
-    function read_awards_admin_detail($file_path,$award_year): void{
+    function read_awards_admin_detail($file_path,$award_description): void{
         $file = fopen($file_path,'r');
         //loop runs as long as there is data to read from file
         if(file_exists($file_path)){
             while(($section = fgetcsv($file)) !== false) {
                 //check if the employee number in the file matches the award year in the URL
-                if($section[0] == $award_year){
-                    echo"<h3>Year: $section[1]</h3>
-                        <p>Award Description $section[0]</p>";
+                if($section[1] == $award_description){
+                    echo"<h3>Year: $section[0]</h3>
+                        <p>Award Description $section[1]</p>";
                         
                 }
             }

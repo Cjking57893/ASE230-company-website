@@ -29,7 +29,7 @@
                 <p>You will not be able to undo any deletion.</p>
                 <hr>
                 <form method="post" action="">
-                    <input type="hidden" name="employeeNumber" value="<?php echo htmlspecialchars($_GET['emp_num']); ?>">
+                    <input type="hidden" name="employeeNumber" value="<?php echo htmlspecialchars($_GET['award_description']); ?>">
                     <button type="submit" class="btn btn-danger" name="delete">Delete</button>
                     <button type="submit" class="btn btn-dark" name="cancel">Cancel</button>
                 </form>
@@ -37,16 +37,16 @@
                 <?php
                     // Handle the deletion when the form is submitted
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
-                        $employeeNumberToDelete = $_POST['employeeNumber'];
+                        $awardToDelete = $_POST['award_description'];
                         $filename = '../../data/team.csv'; // Path to your CSV file
-                        delete_team_member("../../data/team.csv", $_GET['emp_num']);
+                        delete_award("../../data/awards.csv", $_GET['award_description']);
                         //redirect back to index
                         header("Location: index.php");
                         exit; // Stop script execution
                     }
 
                     if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel'])){
-                        header("Location: detail.php?emp_num=$_GET[emp_num]");
+                        header("Location: detail.php?award_description=$_GET[award_description]");
                     }
                 ?>
             </div>

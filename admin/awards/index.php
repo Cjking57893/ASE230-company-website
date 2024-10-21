@@ -53,8 +53,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">Year</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Year</th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">

@@ -48,10 +48,9 @@
 
         <div class="container">
             <?php 
-                read_awards_admin_detail("../../data/awards.csv", $_GET['award_year']);
-                echo "<a href=\"edit.php?award_year=$_GET[award_year]\"><button type=\"button\" class=\"btn btn-dark\">Edit</button></a>
-                <a href=\"delete.php?award_year=$_GET[award_year]\"><button type=\"button\" class=\"btn btn-danger\">Delete</button></a>"
-
+                read_awards_admin_detail("../../data/awards.csv", $_GET['award_description']);
+                echo "<a href=\"edit.php?award_description=$_GET[award_description]\"><button type=\"button\" class=\"btn btn-dark\">Edit</button></a>
+                <a href=\"delete.php?award_description=$_GET[award_description]\"><button type=\"button\" class=\"btn btn-danger\">Delete</button></a>"
             ?>
 
         </div>
