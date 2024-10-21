@@ -94,3 +94,44 @@ function delete_page($file_path, $page_name) {
         echo "File not found.";
     }
 }
+
+function read_page_admin_detail($file_path, $page_name): void {
+    // Check if the file exists
+    if (file_exists($file_path)) {
+        // Open the file for reading
+        $file = fopen($file_path, 'r');
+        $is_in_section = false;
+        $skip_next_line = false;
+
+        // Loop through each line in the file
+        while (($line = fgets($file)) !== false) {
+            // Check if we have found the page name (section title)
+            if (trim($line) === $page_name . ":") {
+                // Output the title
+                echo "<h3>" . htmlspecialchars($page_name) . "</h3>";
+                
+                // Start capturing content after skipping the next line
+                $is_in_section = true;
+                $skip_next_line = true; // Skip the line immediately after the title
+                continue;
+            }
+
+            // Skip the line immediately after the title
+            if ($skip_next_line) {
+                $skip_next_line = false; // We've skipped the line after the title
+                continue;
+            }
+
+            // Output the content if we are in the section
+            if ($is_in_section) {
+                echo "<p>" . htmlspecialchars($line) . "</p>";
+                break; // Stop after reading the content line
+            }
+        }
+
+        // Close the file
+        fclose($file);
+    } else {
+        echo "File not found.";
+    }
+}
