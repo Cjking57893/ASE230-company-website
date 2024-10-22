@@ -99,11 +99,12 @@
         <!-- Hero End -->
 
         <!-- Features start -->
-<section class="section bg-light" id="productsAndServices">
+    <section class="section bg-light" id="productsAndServices">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-7 text-center">
                 <h2 class="fw-bold">Key Products & Services</h2>
+                <a href="admin/products/index.php" class="btn btn-primary mt-3">Managing Products</a>
             </div>
             <!-- end col -->
         </div>
@@ -127,10 +128,8 @@
             <!-- end col -->
         </div>
         <!-- end row -->
-        <?php endforeach; ?>
-        
+        <?php endforeach; ?>  
     </div>
-    <!-- end container -->
 </section>
 <!-- Features end -->
 
