@@ -189,38 +189,25 @@ function create_form_for_editing_page($file_path, $page_name) {
     }
 }
 
-function edit_page_info($file_path, $page_name, $page_content) {
-    // Open the file for reading
-    $file_read = fopen($file_path, 'r');
-    $lines = [];
+// Function to edit the page information and page name
+function edit_page_info($filePath, $oldTitle, $newTitle, $newContent) {
+    // Read the entire file as a string to preserve newlines
+    $fileContent = file_get_contents($filePath);
 
-    if (file_exists($file_path)) {
-        while (($line = fgets($file_read)) !== false) {
-            // Check if the current line matches the page name (section title)
-            if (trim($line) === $page_name . ":") {
-                // Add the new page title and content to the lines array
-                $lines[] = $page_name . ":"; // Add the title
-                fgets($file_read); // Skip the line after the title
-                $lines[] = $page_content; // Add the new content
-                continue; // Skip the rest of the section and move on
-            }
-
-            // Add all other lines unchanged
-            $lines[] = $line;
-        }
-
-        fclose($file_read);
-
-        // Write the new content back to the file
-        $file_write = fopen($file_path, 'w');
-        foreach ($lines as $line) {
-            fwrite($file_write, $line);
-        }
-        fclose($file_write);
-
-        echo "Page '$page_name' has been successfully updated.";
+    // Prepare the search and replace pattern
+    $pattern = "/^" . preg_quote($oldTitle, '/') . "\s*(.*)$/m";
+    
+    // Check if the old title exists and replace it with the new title and content
+    if (preg_match($pattern, $fileContent, $matches)) {
+        // Replaces the old title and its content
+        $newSection = $newTitle . PHP_EOL . $newContent;
+        $fileContent = preg_replace($pattern, $newSection, $fileContent);
+        
+        // Write the updated content back to the file
+        file_put_contents($filePath, $fileContent);
+        echo "Content successfully replaced.";
     } else {
-        echo "File not found.";
+        echo "Title not found.";
     }
 }
 
