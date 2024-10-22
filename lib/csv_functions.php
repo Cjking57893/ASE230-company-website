@@ -458,8 +458,8 @@
         if(file_exists($file_path)){
             while(($section = fgetcsv($file)) !== false) {
                 echo "<tr>
-                        <td class=\"align-middle\">$section[0]</td>
-                        <td class=\"align-middle\"><a href=detail.php?contact_phone=$section[1]>$section[1]</a></td>
+                        <td class=\"align-middle\"><a href=detail.php?contact_phone=$section[1]>$section[0]</td>
+                        <td class=\"align-middle\">$section[1]</a></td>
                         <td class=\"align-middle\">$section[2]</td>
                         </tr>";
             }
