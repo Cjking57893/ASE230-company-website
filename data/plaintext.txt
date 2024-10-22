@@ -5,7 +5,3 @@ Orion Aerospace Dynamics, founded in 2021, is a game-changing aerospace company 
 Mission Statement:
 
 "To push the boundaries of human reach, making the vast expanse of space a familiar terrain and ensuring Earth's skies are traveled sustainably."
-
-jimmy:
-
-neutron
