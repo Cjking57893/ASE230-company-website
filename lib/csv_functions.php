@@ -35,7 +35,7 @@
             $found = false;
             if(file_exists($file_path)){
                 while(($section = fgetcsv($file_read)) !== false) {
-                    if($section[0] == $award_year){
+                    if($section[1] == $award_description){
                             $found = true;
                     }
                 }
@@ -44,7 +44,7 @@
                 if($found==false){
                     fputcsv($file, $data);
                     //redirect to edit.php
-                    header("Location: edit.php?award_year=$award_year");
+                    header("Location: edit.php?award_description=$award_description");
                     exit; // Stop script execution
                 }
                 else{
@@ -63,7 +63,7 @@
                 while(($section = fgetcsv($file)) !== false) {
                     echo "<tr>
                         <td class=\"align-middle\">$section[1]</td>
-                        <td class=\"align-middle\"><a href=detail.php?award_description=$section[1]>$section[0]</a></td> 
+                        <td class=\"align-middle\"><a href=detail.php?award_description=",urlencode($section[1]),">$section[0]</a></td> 
                         </tr>";
                 }
             }
@@ -79,7 +79,7 @@
                     echo "<form method=\"post\" action=\"\">
                     <div class=\"mb-3\">
                         <label for=\"year\" class=\"form-label\">Year the award was given</label>
-                        <input type=\"text\" class=\"form-control w-25\" id=\"year\" name=\"year\" value=\"$section[0]\" style=\"border-color: black\">
+                        <input type=\"text\" class=\"form-control w-25\" id=\"award_year\" name=\"award_year\" value=\"$section[0]\" style=\"border-color: black\">
                     </div>
                     <div class=\"mb-3\">
                         <label for=\"description\" class=\"form-label\">Award Description</label>
@@ -93,7 +93,7 @@
         }
     }
         //function edits entry in the csv file according to input from edit form
-        function edit_awards_info($file_path, $award_year, $award_description){
+        function edit_awards_info($file_path, $award_description, $award_year, $old){
             //open file for reading to find award entry
             $file_read = fopen($file_path, 'r');
             //create array to hold award info
@@ -102,16 +102,16 @@
             if(file_exists($file_path)){
                 while(($section = fgetcsv($file_read)) !== false) {
                     
-                    // Check if the emp number matches the emp number in the URL
-                    if ($section[1] == $award_description) {
-                        $section[0] == $award_year;
-                        $section[1] == $award_description;
-                        //continue; //skip over existing entry
+                   
+                    if ($section[1] == $old) {
+                       // $section[0] == $award_year;
+                       // $section[1] == $award_description;
+                        continue; //skip over existing entry
                     }
                     $lines[] = $section;  
                     
                 }
-                //$lines[] = $data;
+                $lines[] = $data;
                 $file = fopen($file_path, 'w');
                 foreach ($lines as $line) {
                     fputcsv($file, $line);

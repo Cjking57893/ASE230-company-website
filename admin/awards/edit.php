@@ -53,7 +53,7 @@
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     //call function to create team member
-                    edit_awards_info("../../data/awards.csv", $_GET['award_description'], $_POST['award_year']);
+                    edit_awards_info("../../data/awards.csv", $_POST['description'], $_POST['award_year'], $_GET['award_description']);
                     //refresh the page to display new info
                     header("refresh: 1");
                 }
