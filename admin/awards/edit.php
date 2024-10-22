@@ -9,7 +9,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Admin - Award Details</title>
+        <title>Admin - Award Detail</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Premium Bootstrap 5 Landing Page Template" />
         <meta name="keywords" content="bootstrap 5, premium, marketing, multipurpose" />
@@ -49,11 +49,11 @@
          <div class="container position-absolute top-50 start-50 translate-middle">
             <h2>Edit award information:</h2>
             <?php
-                create_award_edit("../../data/awards.csv",$_GET['award_year']);
+                create_award_edit("../../data/awards.csv", $_GET['award_description']);
 
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     //call function to create team member
-                    edit_awards_info("../../data/awards.csv", $_GET['award_year'], $_POSt['award_description']);
+                    edit_awards_info("../../data/awards.csv", $_POST['description'], $_POST['award_year'], $_GET['award_description']);
                     //refresh the page to display new info
                     header("refresh: 1");
                 }
