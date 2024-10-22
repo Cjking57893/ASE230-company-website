@@ -136,78 +136,68 @@ function read_page_admin_detail($file_path, $page_name): void {
     }
 }
 
-function create_form_for_editing_page($file_path, $page_name) {
-    // Check if the file exists
-    if (file_exists($file_path)) {
-        // Open the file for reading
-        $file = fopen($file_path, 'r');
-        $is_in_section = false;
-        $skip_next_line = false;
-        $content = '';
-
-        // Loop through each line in the file
-        while (($line = fgets($file)) !== false) {
-            // Check if we have found the page name (section title)
-            if (trim($line) === $page_name . ":") {
-                // Start capturing content after skipping the next line
-                $is_in_section = true;
-                $skip_next_line = true; // Skip the line immediately after the title
-                $page_title = $page_name; // Set the title
-                continue;
-            }
-
-            // Skip the line immediately after the title
-            if ($skip_next_line) {
-                $skip_next_line = false; // We've skipped the line after the title
-                continue;
-            }
-
-            // Capture the content of the section
-            if ($is_in_section) {
-                $content .= $line;
-                break; // Stop after reading the content line
+function create_page_for_editing_info($file_path, $page_title){
+    //open file for reading
+    $file = fopen($file_path, 'r');
+    if(file_exists($file_path)){
+        while (($section = fgetcsv($file)) !== false) {
+            // Check if the title matches the page title in the URL or parameter
+            if ($section[0] == $page_title) {
+                echo "<form method=\"post\" action=\"\">
+                <div class=\"mb-3\">
+                    <label for=\"title\" class=\"form-label\">Page Title</label>
+                    <input type=\"text\" class=\"form-control w-50\" id=\"title\" name=\"title\" value=\"$section[0]\" style=\"border-color: black\">
+                </div>
+                <div class=\"mb-3\">
+                    <label for=\"content\" class=\"form-label\">Page Content</label>
+                    <textarea class=\"form-control w-50\" id=\"content\" name=\"content\" style=\"border-color: black\">$section[1]</textarea>
+                </div>
+                <button type=\"submit\" class=\"btn btn-primary\">Save Changes</button>
+            </form>";
+            break;
             }
         }
-
-        // Close the file
         fclose($file);
-
-        // Display the form with the pre-filled page title and content
-        echo "<form method=\"post\" action=\"\">
-            <div class=\"mb-3\">
-                <label for=\"name\" class=\"form-label\">Page Name</label>
-                <input type=\"text\" class=\"form-control w-50\" id=\"name\" name=\"name\" value=\"" . htmlspecialchars($page_name) . "\" style=\"border-color: black\">
-            </div>
-            <div class=\"mb-3\">
-                <label for=\"content\" class=\"form-label\">Page Content</label>
-                <textarea class=\"form-control w-50\" id=\"content\" name=\"content\" rows=\"5\" style=\"border-color: black\">" . htmlspecialchars($content) . "</textarea>
-            </div>
-            <button type=\"submit\" class=\"btn btn-primary\">Save Changes</button>
-        </form>";
-    } else {
-        echo "File not found.";
     }
 }
 
-// Function to edit the page information and page name
-function edit_page_info($filePath, $oldTitle, $newTitle, $newContent) {
-    // Read the entire file as a string to preserve newlines
-    $fileContent = file_get_contents($filePath);
+function edit_page_info($file_path, $old_title, $new_title, $new_content) {
+    // Add a colon and double newline to the old title for the search
+    $old_title_with_colon = $old_title . ":\n\n";
 
-    // Prepare the search and replace pattern
-    $pattern = "/^" . preg_quote($oldTitle, '/') . "\s*(.*)$/m";
-    
-    // Check if the old title exists and replace it with the new title and content
-    if (preg_match($pattern, $fileContent, $matches)) {
-        // Replaces the old title and its content
-        $newSection = $newTitle . PHP_EOL . $newContent;
-        $fileContent = preg_replace($pattern, $newSection, $fileContent);
-        
+    // Add a colon and double newline to the new title for the replacement
+    $new_title_with_colon = $new_title . ":\n\n";
+
+    // Read the entire file into a string
+    $file_contents = file_get_contents($file_path);
+
+    // Check if the old title with colon and blank line exists
+    $position = strpos($file_contents, $old_title_with_colon);
+    if ($position !== false) {
+        // Find the end of the content section after the old title
+        $start_of_content = $position + strlen($old_title_with_colon);
+        $end_of_content = strpos($file_contents, "\n\n", $start_of_content);
+
+        // If no double newline is found, the content goes until the end of the file
+        if ($end_of_content === false) {
+            $end_of_content = strlen($file_contents);
+        }
+
+        // Extract the part before the old title, and the part after the old content
+        $before_old_title = substr($file_contents, 0, $position);
+        $after_old_content = substr($file_contents, $end_of_content);
+
+        // Create the new entry with the new title and new content
+        $new_entry = $new_title_with_colon . $new_content;
+
+        // Concatenate the parts: before the old title, the new entry, and the part after the old content
+        $updated_file_contents = $before_old_title . $new_entry . $after_old_content;
+
         // Write the updated content back to the file
-        file_put_contents($filePath, $fileContent);
-        echo "Content successfully replaced.";
+        file_put_contents($file_path, $updated_file_contents);
+        echo "Page info updated successfully.";
     } else {
-        echo "Title not found.";
+        echo "Old title not found.";
     }
 }
 

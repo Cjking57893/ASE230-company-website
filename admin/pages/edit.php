@@ -2,7 +2,7 @@
     ob_start();
     include '../../lib/csv_functions.php';
     include '../../lib/readJsonFile.php';
-    include '../../lib/plainfunction.php';  // This includes the edit_page_info function
+    include '../../lib/plainfunction.php';
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +78,7 @@
                     echo "File not found.";
                 }
 
+                // Display form with the current page data
                 echo "<form method=\"post\" action=\"\">
                     <div class=\"mb-3\">
                         <label for=\"name\" class=\"form-label\">Page Name</label>
@@ -90,17 +91,24 @@
                     <button type=\"submit\" class=\"btn btn-primary\">Save Changes</button>
                 </form>";
 
+                // Handle form submission to update the page
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    // Call the function to update page name and content
-                    $new_page_name = $_POST['name'];
-                    $new_page_content = $_POST['content'];
-
-                    edit_page_info($file_path, $page_name, $new_page_name, $new_page_content);
-
-                    // Redirect to index.php after successful submission
-                    header("Location: index.php");
-                    exit(); // Make sure to stop further script execution
-                }
+                    // Get new page name and content from form submission
+                    $new_page_name = trim($_POST['name']);
+                    $new_page_content = trim($_POST['content']);
+                
+                    // Ensure both fields are filled out
+                    if (!empty($new_page_name) && !empty($new_page_content)) {
+                        // Call the function to update the page info
+                        edit_page_info($file_path, $page_name, $new_page_name, $new_page_content);
+                
+                        // Redirect to index.php after successful submission
+                        header("Location: index.php");
+                        exit();
+                    } else {
+                        echo "Page name and content cannot be empty.";
+                    }
+                }                
             ?>   
          </div>
 
