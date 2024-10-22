@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <div class="text-center mt-4">
-                <a href="../../index.php" class="btn btn-secondary">Back to Index</a>
+                <a href="index.php" class="btn btn-secondary">Back to Index</a>
             </div>
         </div>
     </div>
