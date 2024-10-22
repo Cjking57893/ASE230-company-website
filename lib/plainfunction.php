@@ -162,42 +162,33 @@ function create_page_for_editing_info($file_path, $page_title){
 }
 
 function edit_page_info($file_path, $old_title, $new_title, $new_content) {
-    // Add a colon and double newline to the old title for the search
-    $old_title_with_colon = $old_title . ":\n\n";
+    // Read the file contents
+    $file_content = file_get_contents($file_path);
+    
+    // Replace the old title with the new title
+    $title_position = strpos($file_content, $old_title);
+    if ($title_position !== false) {
+        // Replace the old title with the new title
+        $file_content = str_replace($old_title, $new_title, $file_content);
+        
+        // Find the position of the new title
+        $new_title_position = strpos($file_content, $new_title);
 
-    // Add a colon and double newline to the new title for the replacement
-    $new_title_with_colon = $new_title . ":\n\n";
+        // Find the position of the line after the title (where the content begins)
+        $content_start_position = strpos($file_content, "\n", $new_title_position) + 1;
 
-    // Read the entire file into a string
-    $file_contents = file_get_contents($file_path);
-
-    // Check if the old title with colon and blank line exists
-    $position = strpos($file_contents, $old_title_with_colon);
-    if ($position !== false) {
-        // Find the end of the content section after the old title
-        $start_of_content = $position + strlen($old_title_with_colon);
-        $end_of_content = strpos($file_contents, "\n\n", $start_of_content);
-
-        // If no double newline is found, the content goes until the end of the file
-        if ($end_of_content === false) {
-            $end_of_content = strlen($file_contents);
+        // Find the end of the current content
+        $content_end_position = strpos($file_content, "\n\n", $content_start_position);
+        if ($content_end_position === false) {
+            // If no next blank line is found, assume the content goes to the end of the file
+            $content_end_position = strlen($file_content);
         }
 
-        // Extract the part before the old title, and the part after the old content
-        $before_old_title = substr($file_contents, 0, $position);
-        $after_old_content = substr($file_contents, $end_of_content);
+        // Replace the old content with the new content, ensuring only one blank line after the title and no newline after the content
+        $file_content = substr_replace($file_content, "\n" . $new_content, $content_start_position, $content_end_position - $content_start_position);
 
-        // Create the new entry with the new title and new content
-        $new_entry = $new_title_with_colon . $new_content;
-
-        // Concatenate the parts: before the old title, the new entry, and the part after the old content
-        $updated_file_contents = $before_old_title . $new_entry . $after_old_content;
-
-        // Write the updated content back to the file
-        file_put_contents($file_path, $updated_file_contents);
-        echo "Page info updated successfully.";
-    } else {
-        echo "Old title not found.";
+        // Save the updated content back to the file
+        file_put_contents($file_path, $file_content);
     }
 }
 
