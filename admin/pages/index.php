@@ -59,7 +59,7 @@
                 </thead>
                 <tbody class="table-group-divider">
                     <?php
-                        read_pages_admin_index("../../data/plaintext.txt");
+                        read_pages_admin_index("../../data/pages.txt");
                     ?>
                 </tbody>
             </table>

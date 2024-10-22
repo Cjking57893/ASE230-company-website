@@ -44,7 +44,7 @@
         <div class="container position-absolute top-50 start-50 translate-middle">
             <h2>Edit page information:</h2>
             <?php
-                $file_path = "../../data/plaintext.txt";
+                $file_path = "../../data/pages.txt";
                 $page_name = isset($_GET['page_name']) ? $_GET['page_name'] : '';
 
                 // Check if the file exists

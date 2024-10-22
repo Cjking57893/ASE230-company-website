@@ -48,7 +48,7 @@
 
         <div class="container">
             <?php 
-                read_page_admin_detail("../../data/plaintext.txt",$_GET['page_name']);
+                read_page_admin_detail("../../data/pages.txt",$_GET['page_name']);
                 echo "<a href=\"edit.php?page_name=$_GET[page_name]\"><button type=\"button\" class=\"btn btn-dark\">Edit</button></a>
                       <a href=\"delete.php?page_name=$_GET[page_name]\"><button type=\"button\" class=\"btn btn-danger\">Delete</button></a>"
             ?>

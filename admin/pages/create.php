@@ -64,7 +64,7 @@
         <?php
             if($_SERVER['REQUEST_METHOD'] === 'POST'){
             //call function to create team member
-            create_page("../../data/plaintext.txt", $_POST['name'], $_POST['content']);
+            create_page("../../data/pages.txt", $_POST['name'], $_POST['content']);
             }
         ?>
         <!-- javascript -->

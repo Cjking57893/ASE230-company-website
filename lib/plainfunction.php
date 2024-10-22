@@ -1,6 +1,6 @@
 
 <?php
-// PHP function to read the data from data/plaintext.txt
+// PHP function to read the data from data/pages.txt
 function readOverview($filePath) {
     // Set the relative path to the file
     $file = fopen($filePath,'r');

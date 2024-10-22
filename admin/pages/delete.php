@@ -38,7 +38,7 @@
                     // Handle the deletion when the form is submitted
                     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
                         $pageNameToDelete = $_POST['pageName'];
-                        $filename = '../../data/plaintext.txt'; // Path to your CSV file
+                        $filename = '../../data/pages.txt'; // Path to your CSV file
                         delete_page($filename, $_GET['page_name']);
                         //redirect back to index
                         header("Location: index.php");
